@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cakasim\Payone\Sdk\Http\Factory;
+namespace Payone\Sdk\Http\Factory;
 
-use Cakasim\Payone\Sdk\Http\Message\Uri;
+use Payone\Sdk\Http\Message\Uri;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 

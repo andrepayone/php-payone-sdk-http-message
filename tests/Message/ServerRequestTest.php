@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Cakasim\Payone\Sdk\Tests\Http\Message;
+namespace Payone\Sdk\Tests\Http\Message;
 
-use Cakasim\Payone\Sdk\Http\Factory\RequestFactory;
-use Cakasim\Payone\Sdk\Http\Factory\ServerRequestFactory;
-use Cakasim\Payone\Sdk\Http\Factory\StreamFactory;
-use Cakasim\Payone\Sdk\Http\Factory\UriFactory;
-use Cakasim\Payone\Sdk\Http\Message\Request;
+use Payone\Sdk\Http\Factory\RequestFactory;
+use Payone\Sdk\Http\Factory\ServerRequestFactory;
+use Payone\Sdk\Http\Factory\StreamFactory;
+use Payone\Sdk\Http\Factory\UriFactory;
+use Payone\Sdk\Http\Message\Request;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ServerRequestInterface;

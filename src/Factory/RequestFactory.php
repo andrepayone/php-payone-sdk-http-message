@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cakasim\Payone\Sdk\Http\Factory;
+namespace Payone\Sdk\Http\Factory;
 
-use Cakasim\Payone\Sdk\Http\Message\Request;
+use Payone\Sdk\Http\Message\Request;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
