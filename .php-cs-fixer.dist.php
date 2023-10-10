@@ -30,12 +30,13 @@ return $config->setRules([
     ],
     'class_attributes_separation' => [
         'elements' => [
-            'method', 'property',
+            'method' => 'one',
+            'property' => 'one',
         ],
     ],
     'combine_consecutive_issets' => true,
     'combine_consecutive_unsets' => true,
-    'compact_nullable_typehint' => true,
+    'compact_nullable_type_declaration' => true,
     'concat_space' => [
         'spacing' => 'one',
     ],
@@ -53,7 +54,7 @@ return $config->setRules([
             'get_called_class', 'get_class', 'php_sapi_name', 'phpversion', 'pi',
         ],
     ],
-    'function_typehint_space' => true,
+    'type_declaration_spaces' => ['elements' => ['function', 'property']],
     'heredoc_to_nowdoc' => true,
     'implode_call' => true,
     'include' => true,
@@ -77,8 +78,8 @@ return $config->setRules([
         'strategy' => 'no_multi_line',
     ],
     'native_function_casing' => true,
-    'native_function_type_declaration_casing' => true,
-    'new_with_braces' => true,
+    'native_type_declaration_casing' => true,
+    'new_with_parentheses' => true,
     'no_alternative_syntax' => true,
     'no_binary_string' => true,
     'no_blank_lines_after_class_opening' => true,
@@ -105,9 +106,15 @@ return $config->setRules([
         'allow_unused_params' => false,
         'remove_inheritdoc' => false,
     ],
-    'no_trailing_comma_in_list_call' => true,
-    'no_trailing_comma_in_singleline_array' => true,
-    'no_unneeded_curly_braces' => true,
+    'no_trailing_comma_in_singleline' => [
+        'elements'=>[
+            'arguments',
+            'array',
+            'array_destructuring',
+            'group_import'
+        ]
+    ],
+    'no_unneeded_braces' => ['namespaces' => true],
     'no_unneeded_final_method' => true,
     'no_unset_cast' => true,
     'no_unset_on_property' => true,
@@ -162,7 +169,7 @@ return $config->setRules([
     'set_type_to_cast' => true,
     'short_scalar_cast' => true,
     'simple_to_complex_string_variable' => true,
-    'single_blank_line_before_namespace' => true,
+    'blank_lines_before_namespace' => ['min_line_breaks' => 2, 'max_line_breaks' => 2],
     'single_line_comment_style' => true,
     'space_after_semicolon' => [
         'remove_in_empty_for_expressions' => true,
