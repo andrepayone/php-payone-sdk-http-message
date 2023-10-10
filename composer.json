@@ -50,7 +50,7 @@
     "require-dev": {},
     "scripts": {
         "download-phpcsf": "curl --silent -L https://cs.symfony.com/download/php-cs-fixer-v3.phar --create-dirs --output vendor/bin/phpcsf.phar",
-        "download-phpstan": "curl --silent -L https://github.com/phpstan/phpstan/releases/download/0.12.19/phpstan.phar --create-dirs --output vendor/bin/phpstan.phar",
+        "download-phpstan": "curl --silent -L https://github.com/phpstan/phpstan/releases/download/1.10.38/phpstan.phar --create-dirs --output vendor/bin/phpstan.phar",
         "download-phpunit": "curl --silent -L https://phar.phpunit.de/phpunit-8.phar --create-dirs --output vendor/bin/phpunit.phar",
         "phpcsf": "php vendor/bin/phpcsf.phar -v fix --dry-run --allow-risky=yes",
         "phpstan": "php vendor/bin/phpstan.phar analyse",

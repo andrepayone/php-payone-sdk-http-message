@@ -73,9 +73,9 @@ class Stream implements StreamInterface
      * Returns stats about the underlying stream.
      *
      * @param string|null $key The key of the concrete stat to return.
-     * @return array|mixed|null All stats if key is null, the requested stat or null if the stat does not exist.
+     * @return int|array|bool|null All stats if key is null, the requested stat or null if the stat does not exist.
      */
-    protected function getStats(string $key = null)
+    protected function getStats(string $key = null): int|array|bool|null
     {
         if (!$this->isValid()) {
             return null;
@@ -121,7 +121,7 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function getSize()
+    public function getSize(): int|bool|array|null
     {
         return $this->getStats('size');
     }
@@ -129,7 +129,7 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function tell()
+    public function tell(): int
     {
         if (!$this->isValid()) {
             throw new RuntimeException('The stream is invalid.');
@@ -147,16 +147,16 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function eof()
+    public function eof(): bool
     {
         // Return feof() result for valid streams, otherwise true.
-        return $this->isValid() ? feof($this->stream) : true;
+        return !$this->isValid() || feof($this->stream);
     }
 
     /**
      * @inheritDoc
      */
-    public function isSeekable()
+    public function isSeekable(): bool
     {
         return $this->getMetadata('seekable') === true;
     }
@@ -167,11 +167,11 @@ class Stream implements StreamInterface
     public function seek($offset, $whence = SEEK_SET): void
     {
         if (!$this->isSeekable()) {
-            throw new \RuntimeException('The stream is not seekable.');
+            throw new RuntimeException('The stream is not seekable.');
         }
 
         if (fseek($this->stream, $offset, $whence) !== 0) {
-            throw new \RuntimeException('Failed to seek in the stream.');
+            throw new RuntimeException('Failed to seek in the stream.');
         }
     }
 
@@ -188,7 +188,7 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function isWritable()
+    public function isWritable(): bool
     {
         $mode = $this->getMetadata('mode');
 
@@ -208,7 +208,7 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function write($string)
+    public function write($string): int
     {
         if (!$this->isWritable()) {
             throw new RuntimeException('The stream is not writable.');
@@ -226,7 +226,7 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function isReadable()
+    public function isReadable(): bool
     {
         $mode = $this->getMetadata('mode');
 
@@ -246,10 +246,14 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function read($length)
+    public function read(int $length): string
     {
         if (!$this->isReadable()) {
             throw new RuntimeException('The stream is not readable.');
+        }
+
+        if ($length < 0) {
+            throw new RuntimeException('Given length for reading stream is negative.');
         }
 
         $data = fread($this->stream, $length);
@@ -264,7 +268,7 @@ class Stream implements StreamInterface
     /**
      * @inheritDoc
      */
-    public function getContents()
+    public function getContents(): string
     {
         if (!$this->isValid()) {
             throw new RuntimeException('The stream is invalid.');
@@ -287,7 +291,7 @@ class Stream implements StreamInterface
         try {
             $this->rewind();
             return $this->getContents();
-        } catch (Exception $e) {
+        } catch (Exception) {
             // Do not raise any exceptions!
             return '';
         }
