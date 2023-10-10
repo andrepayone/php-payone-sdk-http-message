@@ -154,7 +154,7 @@ return $config->setRules([
     'phpdoc_types' => true,
     'phpdoc_var_without_name' => true,
     'pow_to_exponentiation' => true,
-    'psr4' => true,
+    'psr_autoloading' => true,
     'random_api_migration' => true,
     'return_type_declaration' => [
         'space_before' => 'none',
