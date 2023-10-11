@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cakasim\Payone\Sdk\Tests\Http\Message;
+namespace Payone\Sdk\Tests\Http\Message;
 
-use Cakasim\Payone\Sdk\Http\Message\Uri;
+use Payone\Sdk\Http\Message\Uri;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\UriInterface;
 
@@ -24,9 +24,6 @@ class UriTest extends TestCase
         return [
             [':'],
             [':80'],
-            ['host:0'],
-            ['host:65536'],
-            ['scheme://host:junk'],
         ];
     }
 

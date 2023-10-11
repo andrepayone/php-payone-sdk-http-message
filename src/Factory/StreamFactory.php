@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cakasim\Payone\Sdk\Http\Factory;
+namespace Payone\Sdk\Http\Factory;
 
-use Cakasim\Payone\Sdk\Http\Message\Stream;
+use Payone\Sdk\Http\Message\Stream;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;

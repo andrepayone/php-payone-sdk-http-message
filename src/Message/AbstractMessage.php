@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cakasim\Payone\Sdk\Http\Message;
+namespace Payone\Sdk\Http\Message;
 
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
@@ -15,24 +15,23 @@ use Psr\Http\Message\StreamInterface;
  */
 abstract class AbstractMessage implements MessageInterface
 {
-    public const PROTOCOL_VERSION_1_0 = '1.0';
     public const PROTOCOL_VERSION_1_1 = '1.1';
     public const PROTOCOL_VERSION_2 = '2';
 
     /**
      * @var string The HTTP protocol version.
      */
-    protected $protocolVersion;
+    protected string $protocolVersion;
 
     /**
-     * @var string[][] The HTTP headers.
+     * @var array The HTTP headers.
      */
-    protected $headers = [];
+    protected array $headers;
 
     /**
      * @var StreamInterface The HTTP body.
      */
-    protected $body;
+    protected StreamInterface $body;
 
     /**
      * Constructs a message.
@@ -48,6 +47,7 @@ abstract class AbstractMessage implements MessageInterface
 
         // Parse message headers to internal format.
         foreach ($headers as $name => $values) {
+            $name = (string) $name;
             $this->headers[strtolower($name)] = is_array($values)
                 ? [$name, $values]
                 : [$name, [$values]];
@@ -65,7 +65,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function getProtocolVersion()
+    public function getProtocolVersion(): string
     {
         return $this->protocolVersion;
     }
@@ -85,7 +85,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function withProtocolVersion($version)
+    public function withProtocolVersion($version): AbstractMessage|MessageInterface
     {
         return (clone $this)->setProtocolVersion($version);
     }
@@ -93,7 +93,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         $headers = [];
 
@@ -107,7 +107,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function hasHeader($name)
+    public function hasHeader($name): bool
     {
         return isset($this->headers[strtolower($name)]);
     }
@@ -115,7 +115,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function getHeader($name)
+    public function getHeader($name): array|string
     {
         return $this->headers[strtolower($name)][1] ?? [];
     }
@@ -146,10 +146,14 @@ abstract class AbstractMessage implements MessageInterface
      */
     protected function addHeader(string $name, array $value): self
     {
+        $header = $this->getHeader($name);
+        if (!is_array($header)) {
+            $header = [$header];
+        }
         $this->setHeader(
             $name,
             $this->hasHeader($name)
-                ? array_merge($this->getHeader($name), $value)
+                ? array_merge($header, $value)
                 : $value
         );
 
@@ -171,15 +175,20 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function getHeaderLine($name)
+    public function getHeaderLine($name): string
     {
-        return join(',', $this->getHeader($name));
+        $header = $this->getHeader($name);
+        if (!is_array($header)) {
+            $header = [$header];
+        }
+
+        return join(',', $header);
     }
 
     /**
      * @inheritDoc
      */
-    public function withHeader($name, $value)
+    public function withHeader($name, $value): AbstractMessage|MessageInterface
     {
         return (clone $this)->setHeader(
             $name,
@@ -192,7 +201,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function withAddedHeader($name, $value)
+    public function withAddedHeader($name, $value): AbstractMessage|MessageInterface
     {
         return (clone $this)->addHeader(
             $name,
@@ -205,7 +214,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function withoutHeader($name)
+    public function withoutHeader($name): AbstractMessage|MessageInterface
     {
         return (clone $this)->removeHeader($name);
     }
@@ -213,7 +222,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function getBody()
+    public function getBody(): StreamInterface
     {
         return $this->body;
     }
@@ -233,7 +242,7 @@ abstract class AbstractMessage implements MessageInterface
     /**
      * @inheritDoc
      */
-    public function withBody(StreamInterface $body)
+    public function withBody(StreamInterface $body): AbstractMessage|MessageInterface
     {
         return (clone $this)->setBody($body);
     }

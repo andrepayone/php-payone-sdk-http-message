@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Cakasim\Payone\Sdk\Tests\Http\Message;
+namespace Payone\Sdk\Tests\Http\Message;
 
-use Cakasim\Payone\Sdk\Http\Factory\StreamFactory;
+use Payone\Sdk\Http\Factory\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
