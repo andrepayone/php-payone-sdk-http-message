@@ -146,10 +146,14 @@ abstract class AbstractMessage implements MessageInterface
      */
     protected function addHeader(string $name, array $value): self
     {
+        $header = $this->getHeader($name);
+        if (!is_array($header)) {
+            $header = [$header];
+        }
         $this->setHeader(
             $name,
             $this->hasHeader($name)
-                ? array_merge($this->getHeader($name), $value)
+                ? array_merge($header, $value)
                 : $value
         );
 
@@ -173,7 +177,12 @@ abstract class AbstractMessage implements MessageInterface
      */
     public function getHeaderLine($name): string
     {
-        return join(',', $this->getHeader($name));
+        $header = $this->getHeader($name);
+        if (!is_array($header)) {
+            $header = [$header];
+        }
+
+        return join(',', $header);
     }
 
     /**
