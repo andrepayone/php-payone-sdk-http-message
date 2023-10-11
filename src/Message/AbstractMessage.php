@@ -47,7 +47,7 @@ abstract class AbstractMessage implements MessageInterface
 
         // Parse message headers to internal format.
         foreach ($headers as $name => $values) {
-            $name = strval($name);
+            $name = (string) $name;
             $this->headers[strtolower($name)] = is_array($values)
                 ? [$name, $values]
                 : [$name, [$values]];
