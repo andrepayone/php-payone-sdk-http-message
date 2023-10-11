@@ -1,6 +1,2 @@
 parameters:
 	ignoreErrors:
-		-
-			message: "#^Method Payone\\\\Sdk\\\\Http\\\\Message\\\\AbstractMessage\\:\\:getHeaders\\(\\) should return array\\<array\\<string\\>\\> but returns array\\<string, string\\>\\.$#"
-			count: 1
-			path: src/Message/AbstractMessage.php

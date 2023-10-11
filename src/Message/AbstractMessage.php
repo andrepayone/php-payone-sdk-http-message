@@ -24,9 +24,9 @@ abstract class AbstractMessage implements MessageInterface
     protected string $protocolVersion;
 
     /**
-     * @var string[][] The HTTP headers.
+     * @var array The HTTP headers.
      */
-    protected array $headers = [];
+    protected array $headers;
 
     /**
      * @var StreamInterface The HTTP body.
