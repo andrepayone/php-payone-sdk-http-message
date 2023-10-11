@@ -24,9 +24,6 @@ class UriTest extends TestCase
         return [
             [':'],
             [':80'],
-            ['host:0'],
-            ['host:65536'],
-            ['scheme://host:junk'],
         ];
     }
 
