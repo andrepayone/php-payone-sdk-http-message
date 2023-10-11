@@ -50,7 +50,7 @@ abstract class AbstractMessage implements MessageInterface
             $name = strval($name);
             $this->headers[strtolower($name)] = is_array($values)
                 ? [$name, $values]
-                : [$name, [strval($values)]];
+                : [$name, [$values]];
         }
     }
 
